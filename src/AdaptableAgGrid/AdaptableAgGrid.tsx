@@ -13,12 +13,15 @@ import { agGridModules } from './agGridModules';
 
 const renderWeakMap: WeakMap<HTMLElement, Root> = new WeakMap();
 
-export const AdaptableAgGrid = () => {
+export interface AdaptableAgGridProps {
+  instanceIndex: number;
+  headerBackground: string;
+}
+export const AdaptableAgGrid = (props: AdaptableAgGridProps) => {
   const gridOptions = useMemo<GridOptions<Car>>(
     () => ({
       defaultColDef,
       columnDefs,
-      rowData,
       sideBar: true,
 
       suppressMenuHide: true,
@@ -32,14 +35,34 @@ export const AdaptableAgGrid = () => {
       licenseKey: import.meta.env.VITE_ADAPTABLE_LICENSE_KEY,
       primaryKey: 'id',
       userName: 'Test User',
-      adaptableId: 'Adaptable React Poc',
-      adaptableStateKey: 'adaptable_react_poc',
+      adaptableId: `Adaptable-${props.instanceIndex}`,
       predefinedConfig: {
         Dashboard: {
           Tabs: [
             {
               Name: 'Welcome',
               Toolbars: ['Layout'],
+            },
+          ],
+        },
+        CalculatedColumn: {
+          CalculatedColumns: [
+            {
+              ColumnId: '2price',
+              CalculatedColumnSettings: {
+                DataType: 'Number',
+              },
+              Query: {
+                ScalarExpression: '2 * [price]',
+              },
+            },
+          ],
+        },
+        Layout: {
+          Layouts: [
+            {
+              Name: 'Default Layout',
+              Columns: ['make', 'model', 'price', '2price', 'date'],
             },
           ],
         },
@@ -51,7 +74,18 @@ export const AdaptableAgGrid = () => {
   const adaptableApiRef = React.useRef<AdaptableApi>();
 
   return (
-    <div className={'flex h-screen flex-col'}>
+    <div
+      className={'flex h-full flex-col'}
+      style={
+        {
+          height: '500px',
+          width: '100%',
+          display: 'flex',
+          flexFlow: 'column',
+          '--ab-dashboard-header__background': props.headerBackground,
+        } as React.CSSProperties
+      }
+    >
       <AdaptableReact
         className={'flex-none'}
         gridOptions={gridOptions}
@@ -69,7 +103,7 @@ export const AdaptableAgGrid = () => {
         onAdaptableReady={({ adaptableApi }) => {
           // save a reference to adaptable api
           adaptableApiRef.current = adaptableApi;
-          console.log('ready!!!');
+          adaptableApi.gridApi.setGridData(rowData);
         }}
       />
       <div className="ag-theme-alpine flex-1">
