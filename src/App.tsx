@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AdaptableAgGrid } from './AdaptableAgGrid';
 
-const NUMBER_OF_ADAPTABLE_INSTANCES = 8;
+const NUMBER_OF_ADAPTABLE_INSTANCES = 12;
 
 function App() {
   const indexes = Array.from(Array(NUMBER_OF_ADAPTABLE_INSTANCES)).map(

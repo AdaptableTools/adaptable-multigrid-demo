@@ -59,9 +59,14 @@ export const AdaptableAgGrid = (props: AdaptableAgGridProps) => {
           ],
         },
         Layout: {
+          CurrentLayout: 'FirstLayout',
           Layouts: [
             {
-              Name: 'Default Layout',
+              Name: 'First Layout',
+              Columns: ['make', 'model', 'price', '2price', 'date'],
+            },
+            {
+              Name: 'Second Layout',
               Columns: ['make', 'model', 'price', '2price', 'date'],
             },
           ],
