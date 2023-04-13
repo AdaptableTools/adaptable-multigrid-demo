@@ -8,6 +8,17 @@
 @import '@adaptabletools/adaptable-react-aggrid/themes/light.css';
 @import '@adaptabletools/adaptable-react-aggrid/themes/dark.css';
 
+:root {
+    --ab__font-family: Helvetica;
+}
+
+body {
+    font-family: var(--ab__font-family);
+}
+
+svg {
+    display: inline;
+}
 
 /**
  *    Styles for multigriddemo
