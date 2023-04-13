@@ -73,7 +73,7 @@ export const AdaptableAgGrid = (props: AdaptableAgGridProps) => {
         },
       },
     }),
-    [],
+    [props.instanceIndex],
   );
 
   const adaptableApiRef = React.useRef<AdaptableApi>();
